@@ -1,4 +1,5 @@
 import random
+from stages import STAGES
 
 # List of secret words
 WORDS = ["python", "git", "github", "snowman", "meltdown"]
@@ -8,6 +9,8 @@ def get_random_word():
     """Selects a random word from the list."""
     return WORDS[random.randint(0, len(WORDS) - 1)]
 
+def  display_game_state():
+    pass
 
 def play_game():
     secret_word = get_random_word()

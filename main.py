@@ -1,3 +1,4 @@
+from snowman import play_game
 
-
-print ("Starting my Melting Snowman")
+if __name__ == "__main__":
+    play_game()
