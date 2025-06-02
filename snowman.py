@@ -12,6 +12,15 @@ def get_random_word():
 def  display_game_state(mistakes, secret_word, guessed_letters):
     """ Displays stages of snowman for current mistakes"""
     print(STAGES[mistakes])
+    display_word = ""
+
+    for letter in secret_word:
+        if letter in guessed_letters:
+            display_word += letter + " "
+        else:
+            display_word += "_"
+
+    print("word:", display_word.strip())
     print("Guessed Letters:", " ".join(sorted(guessed_letters)))
     print(f"Mistakes: {mistakes}/ {max_attempts}")
 
@@ -50,9 +59,13 @@ def play_game():
         else:
             print("Nice Guess!")
 
+        if all(letter in guessed_letter for letter in secret_word):
+            print("You saved the Snowman! The word was:", secret_word)
+            break
+
     else:
         display_game_state(attempts, secret_word, guessed_letter)
-        print(f"You are all out of guesses! The word was: {secret_word}")
+        print(f"You are all out of guesses and the Snowman is melted. The word was: {secret_word}")
 
 
     # print("would you like to play again:"(y/n))
