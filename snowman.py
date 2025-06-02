@@ -3,14 +3,18 @@ from stages import STAGES
 
 # List of secret words
 WORDS = ["python", "git", "github", "snowman", "meltdown"]
-max_attempts = 6
+max_attempts = len(STAGES) -1
 
 def get_random_word():
     """Selects a random word from the list."""
     return WORDS[random.randint(0, len(WORDS) - 1)]
 
-def  display_game_state():
-    pass
+def  display_game_state(mistakes, secret_word, guessed_letters):
+    """ Displays stages of snowman for current mistakes"""
+    print(STAGES[mistakes])
+    print("Guessed Letters:", " ".join(sorted(guessed_letters)))
+    print(f"Mistakes: {mistakes}/ {max_attempts}")
+
 
 def play_game():
     secret_word = get_random_word()
@@ -23,22 +27,33 @@ def play_game():
     # TODO: Build your game loop here.
     """ Game Loop"""
     while attempts < max_attempts:
-        display_word = [letter if letter in guessed_letter else "_" for letter in secret_word]
-        print("current word:" , " ".join(display_word))
+        display_game_state(attempts, secret_word, guessed_letter)
 
-        if "_" not in display_word:
-            print("You guessed the word! you win!")
+        if all(letter in guessed_letter for letter in secret_word):
+            print("You guessed the word! you win ")
             break
+
 
         guess = input("Guess a letter: ").lower()
         print("You guessed:", guess)
+
+        if guess in guessed_letter:
+            print("You already guess that letter, try again!")
+            continue
+
+        guessed_letter.add(guess)
 
         if guess not in secret_word:
             attempts += 1
             print(f"Incorrect, try again!")
 
         else:
-            print("You are all out of guessed! the word was: ", secret_word)
+            print("Nice Guess!")
+
+    else:
+        display_game_state(attempts, secret_word, guessed_letter)
+        print(f"You are all out of guesses! The word was: {secret_word}")
+
 
     # print("would you like to play again:"(y/n))
 
